@@ -2,10 +2,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { SkillsModule } from './skills/skills.module.js';
-import { ExperienceModule } from './experience/experience.module.js';
-import { ProjectsModule } from './projects/projects.module.js';
-import { ProfileModule } from './profile/profile.module.js';
+import { ProfileModule } from '../modules/profile/profile.module.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 
 @Module({
   imports: [
@@ -15,9 +13,7 @@ import { ProfileModule } from './profile/profile.module.js';
       sortSchema: true,
     }),
     ProfileModule,
-    SkillsModule,
-    ExperienceModule,
-    ProjectsModule,
+    PrismaModule,
   ],
 })
-export class AppModule {}
+export class CoreModule {}
