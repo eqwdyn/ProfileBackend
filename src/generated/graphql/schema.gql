@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 input CreateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  description: String
+  name: String!
 }
 
 """
@@ -14,8 +14,7 @@ scalar DateTime
 
 type Mutation {
   createProfile(createProfileInput: CreateProfileInput!): Profile!
-  removeProfile(id: Int!): Profile!
-  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
+  removeProfile(id: String!): Profile!
 }
 
 type Profile {
@@ -27,11 +26,6 @@ type Profile {
 }
 
 type Query {
-  profile(id: Int!): Profile!
-}
-
-input UpdateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  profile(id: String!): Profile!
+  profiles: [Profile!]!
 }

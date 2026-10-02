@@ -5,26 +5,36 @@ import { PrismaService } from '../../core/prisma/prisma.service.js';
 
 @Injectable()
 export class ProfileService {
-    constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  create(createProfileInput: CreateProfileInput) {
-    return 'This action adds a new profile';
+  async create(data: CreateProfileInput) {
+    const newProfile = await this.prisma.profile.create({ data });
+    return newProfile;
   }
 
-  findAll() {
-    const profile = this.prisma.;
+  async findAll() {
+    const profiles = await this.prisma.profile.findMany();
+    return profiles;
+  }
+
+  async findOne(id: string) {
+    const profile = await this.prisma.profile.findUnique({
+      where: { id },
+    });
+
     return profile;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
-  }
+  //   async update(id: string, data: UpdateProfileInput) {
+  //     return this.prisma.profile.update({
+  //       where: { id },
+  //       data,
+  //     });
+  //   }
 
-  update(id: number, updateProfileInput: UpdateProfileInput) {
-    return `This action updates a #${id} profile`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
+  async remove(id: string) {
+    return this.prisma.profile.delete({
+      where: { id },
+    });
   }
 }

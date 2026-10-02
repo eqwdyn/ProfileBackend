@@ -14,8 +14,8 @@ export class Profile {
   //   @Field(() => [Skill], { nullable: true })
   //   skills: Skill[];
 
-  //   @Field(() => [Experience], { nullable: true })
-  //   experiences: Experience[];
+  // @Field(() => [Experience], { nullable: true })
+  // experiences: Experience[];
 
   //   @Field(() => [Project], { nullable: true })
   //   projects: Project[];
