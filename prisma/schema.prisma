@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id String @id @default(uuid())
+
+  name String
+  description String
+  skills ProfileSkill[]
+  experiences ProfileExperience[]
+  projects ProfileProject[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+model Skill {
+  id String @id @default(uuid())
+
+  name String @unique
+  profiles ProfileSkill[]
+
+  @@map("skills")
+}
+
+model ProfileSkill {
+  profileId String
+  skillId String
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, skillId])
+  @@map("profile_skills")
+}
+
+model Experience {
+  id String @id @default(uuid())
+
+  company String @unique
+  position String 
+  profiles ProfileExperience[]
+
+  startDate DateTime @map("start_date")
+  endDate DateTime @map("end_date")
+
+  @@map("experiences")
+}
+
+model ProfileExperience {
+  profileId String
+  experienceId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  experience Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, experienceId])
+  @@map("profile_experiences")
+}
+
+model Project {
+  id String @id @default(uuid())
+  name String
+  profiles ProfileProject[]
+
+  @@map("projects")
+}
+
+model ProfileProject {
+  profileId String
+  projectId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([profileId, projectId])
+  @@map("profile_projects")
+}
