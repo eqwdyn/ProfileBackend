@@ -12,6 +12,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Experience {
+  achievements: [String!]!
+  company: String!
+  endDate: String!
+  position: String!
+  startDate: String!
+}
+
 type Mutation {
   createProfile(createProfileInput: CreateProfileInput!): Profile!
   removeProfile(id: String!): Profile!
@@ -20,12 +28,24 @@ type Mutation {
 type Profile {
   createdAt: DateTime!
   description: String!
+  experiences: [Experience!]
   id: ID!
   name: String!
+  projects: [Project!]
+  skills: [Skill!]
   updatedAt: DateTime!
+}
+
+type Project {
+  name: String!
 }
 
 type Query {
   profile(id: String!): Profile!
   profiles: [Profile!]!
+}
+
+type Skill {
+  """Developer skill"""
+  name: String!
 }
