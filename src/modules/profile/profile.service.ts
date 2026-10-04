@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProfileInput } from './dto/create-profile.input.js';
-import { UpdateProfileInput } from './dto/update-profile.input.js';
+// import { UpdateProfileInput } from './dto/update-profile.input.js';
 import { PrismaService } from '../../core/prisma/prisma.service.js';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ProfileService {
     return profiles;
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const profile = await this.prisma.profile.findUnique({
       where: { id },
     });
@@ -32,7 +32,7 @@ export class ProfileService {
   //     });
   //   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     return this.prisma.profile.delete({
       where: { id },
     });

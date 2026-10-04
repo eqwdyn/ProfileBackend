@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 input CreateProfileInput {
-  description: String
+  description: String!
   name: String!
 }
 
@@ -16,13 +16,14 @@ type Experience {
   achievements: [String!]!
   company: String!
   endDate: String!
+  id: ID!
   position: String!
   startDate: String!
 }
 
 type Mutation {
   createProfile(createProfileInput: CreateProfileInput!): Profile!
-  removeProfile(id: String!): Profile!
+  removeProfile(id: Int!): Profile!
 }
 
 type Profile {
@@ -37,15 +38,19 @@ type Profile {
 }
 
 type Project {
+  description: String!
+  id: ID!
   name: String!
 }
 
 type Query {
-  profile(id: String!): Profile!
+  profile(id: Int!): Profile!
   profiles: [Profile!]!
 }
 
 type Skill {
+  id: ID!
+
   """Developer skill"""
   name: String!
 }

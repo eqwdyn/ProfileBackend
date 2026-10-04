@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ProfileService } from './profile.service.js';
 import { Profile } from './entities/profile.entity.js';
 import { CreateProfileInput } from './dto/create-profile.input.js';
@@ -20,7 +20,7 @@ export class ProfileResolver {
   }
 
   @Query(() => Profile, { name: 'profile' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  findOne(@Args('id', { type: () => Int }) id: number) {
     return this.profileService.findOne(id);
   }
 
@@ -38,7 +38,7 @@ export class ProfileResolver {
   //   }
 
   @Mutation(() => Profile)
-  removeProfile(@Args('id', { type: () => String }) id: string) {
+  removeProfile(@Args('id', { type: () => Int }) id: number) {
     return this.profileService.remove(id);
   }
 }

@@ -20,18 +20,30 @@ export type ProfileExperienceModel = runtime.Types.Result.DefaultSelection<Prism
 
 export type AggregateProfileExperience = {
   _count: ProfileExperienceCountAggregateOutputType | null
+  _avg: ProfileExperienceAvgAggregateOutputType | null
+  _sum: ProfileExperienceSumAggregateOutputType | null
   _min: ProfileExperienceMinAggregateOutputType | null
   _max: ProfileExperienceMaxAggregateOutputType | null
 }
 
+export type ProfileExperienceAvgAggregateOutputType = {
+  profileId: number | null
+  experienceId: number | null
+}
+
+export type ProfileExperienceSumAggregateOutputType = {
+  profileId: number | null
+  experienceId: number | null
+}
+
 export type ProfileExperienceMinAggregateOutputType = {
-  profileId: string | null
-  experienceId: string | null
+  profileId: number | null
+  experienceId: number | null
 }
 
 export type ProfileExperienceMaxAggregateOutputType = {
-  profileId: string | null
-  experienceId: string | null
+  profileId: number | null
+  experienceId: number | null
 }
 
 export type ProfileExperienceCountAggregateOutputType = {
@@ -40,6 +52,16 @@ export type ProfileExperienceCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ProfileExperienceAvgAggregateInputType = {
+  profileId?: true
+  experienceId?: true
+}
+
+export type ProfileExperienceSumAggregateInputType = {
+  profileId?: true
+  experienceId?: true
+}
 
 export type ProfileExperienceMinAggregateInputType = {
   profileId?: true
@@ -95,6 +117,18 @@ export type ProfileExperienceAggregateArgs<ExtArgs extends runtime.Types.Extensi
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileExperienceAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileExperienceSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileExperienceMinAggregateInputType
@@ -125,14 +159,18 @@ export type ProfileExperienceGroupByArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   _count?: ProfileExperienceCountAggregateInputType | true
+  _avg?: ProfileExperienceAvgAggregateInputType
+  _sum?: ProfileExperienceSumAggregateInputType
   _min?: ProfileExperienceMinAggregateInputType
   _max?: ProfileExperienceMaxAggregateInputType
 }
 
 export type ProfileExperienceGroupByOutputType = {
-  profileId: string
-  experienceId: string
+  profileId: number
+  experienceId: number
   _count: ProfileExperienceCountAggregateOutputType | null
+  _avg: ProfileExperienceAvgAggregateOutputType | null
+  _sum: ProfileExperienceSumAggregateOutputType | null
   _min: ProfileExperienceMinAggregateOutputType | null
   _max: ProfileExperienceMaxAggregateOutputType | null
 }
@@ -156,8 +194,8 @@ export type ProfileExperienceWhereInput = {
   AND?: Prisma.ProfileExperienceWhereInput | Prisma.ProfileExperienceWhereInput[]
   OR?: Prisma.ProfileExperienceWhereInput[]
   NOT?: Prisma.ProfileExperienceWhereInput | Prisma.ProfileExperienceWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileExperience"> | string
-  experienceId?: Prisma.StringFilter<"ProfileExperience"> | string
+  profileId?: Prisma.IntFilter<"ProfileExperience"> | number
+  experienceId?: Prisma.IntFilter<"ProfileExperience"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   experience?: Prisma.XOR<Prisma.ExperienceScalarRelationFilter, Prisma.ExperienceWhereInput>
 }
@@ -174,8 +212,8 @@ export type ProfileExperienceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProfileExperienceWhereInput | Prisma.ProfileExperienceWhereInput[]
   OR?: Prisma.ProfileExperienceWhereInput[]
   NOT?: Prisma.ProfileExperienceWhereInput | Prisma.ProfileExperienceWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileExperience"> | string
-  experienceId?: Prisma.StringFilter<"ProfileExperience"> | string
+  profileId?: Prisma.IntFilter<"ProfileExperience"> | number
+  experienceId?: Prisma.IntFilter<"ProfileExperience"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   experience?: Prisma.XOR<Prisma.ExperienceScalarRelationFilter, Prisma.ExperienceWhereInput>
 }, "profileId_experienceId">
@@ -184,16 +222,18 @@ export type ProfileExperienceOrderByWithAggregationInput = {
   profileId?: Prisma.SortOrder
   experienceId?: Prisma.SortOrder
   _count?: Prisma.ProfileExperienceCountOrderByAggregateInput
+  _avg?: Prisma.ProfileExperienceAvgOrderByAggregateInput
   _max?: Prisma.ProfileExperienceMaxOrderByAggregateInput
   _min?: Prisma.ProfileExperienceMinOrderByAggregateInput
+  _sum?: Prisma.ProfileExperienceSumOrderByAggregateInput
 }
 
 export type ProfileExperienceScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProfileExperienceScalarWhereWithAggregatesInput | Prisma.ProfileExperienceScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProfileExperienceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProfileExperienceScalarWhereWithAggregatesInput | Prisma.ProfileExperienceScalarWhereWithAggregatesInput[]
-  profileId?: Prisma.StringWithAggregatesFilter<"ProfileExperience"> | string
-  experienceId?: Prisma.StringWithAggregatesFilter<"ProfileExperience"> | string
+  profileId?: Prisma.IntWithAggregatesFilter<"ProfileExperience"> | number
+  experienceId?: Prisma.IntWithAggregatesFilter<"ProfileExperience"> | number
 }
 
 export type ProfileExperienceCreateInput = {
@@ -202,8 +242,8 @@ export type ProfileExperienceCreateInput = {
 }
 
 export type ProfileExperienceUncheckedCreateInput = {
-  profileId: string
-  experienceId: string
+  profileId: number
+  experienceId: number
 }
 
 export type ProfileExperienceUpdateInput = {
@@ -212,13 +252,13 @@ export type ProfileExperienceUpdateInput = {
 }
 
 export type ProfileExperienceUncheckedUpdateInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  experienceId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  experienceId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileExperienceCreateManyInput = {
-  profileId: string
-  experienceId: string
+  profileId: number
+  experienceId: number
 }
 
 export type ProfileExperienceUpdateManyMutationInput = {
@@ -226,8 +266,8 @@ export type ProfileExperienceUpdateManyMutationInput = {
 }
 
 export type ProfileExperienceUncheckedUpdateManyInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  experienceId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  experienceId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileExperienceListRelationFilter = {
@@ -241,11 +281,16 @@ export type ProfileExperienceOrderByRelationAggregateInput = {
 }
 
 export type ProfileExperienceProfileIdExperienceIdCompoundUniqueInput = {
-  profileId: string
-  experienceId: string
+  profileId: number
+  experienceId: number
 }
 
 export type ProfileExperienceCountOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  experienceId?: Prisma.SortOrder
+}
+
+export type ProfileExperienceAvgOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   experienceId?: Prisma.SortOrder
 }
@@ -256,6 +301,11 @@ export type ProfileExperienceMaxOrderByAggregateInput = {
 }
 
 export type ProfileExperienceMinOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  experienceId?: Prisma.SortOrder
+}
+
+export type ProfileExperienceSumOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   experienceId?: Prisma.SortOrder
 }
@@ -349,7 +399,7 @@ export type ProfileExperienceCreateWithoutProfileInput = {
 }
 
 export type ProfileExperienceUncheckedCreateWithoutProfileInput = {
-  experienceId: string
+  experienceId: number
 }
 
 export type ProfileExperienceCreateOrConnectWithoutProfileInput = {
@@ -382,8 +432,8 @@ export type ProfileExperienceScalarWhereInput = {
   AND?: Prisma.ProfileExperienceScalarWhereInput | Prisma.ProfileExperienceScalarWhereInput[]
   OR?: Prisma.ProfileExperienceScalarWhereInput[]
   NOT?: Prisma.ProfileExperienceScalarWhereInput | Prisma.ProfileExperienceScalarWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileExperience"> | string
-  experienceId?: Prisma.StringFilter<"ProfileExperience"> | string
+  profileId?: Prisma.IntFilter<"ProfileExperience"> | number
+  experienceId?: Prisma.IntFilter<"ProfileExperience"> | number
 }
 
 export type ProfileExperienceCreateWithoutExperienceInput = {
@@ -391,7 +441,7 @@ export type ProfileExperienceCreateWithoutExperienceInput = {
 }
 
 export type ProfileExperienceUncheckedCreateWithoutExperienceInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileExperienceCreateOrConnectWithoutExperienceInput = {
@@ -421,7 +471,7 @@ export type ProfileExperienceUpdateManyWithWhereWithoutExperienceInput = {
 }
 
 export type ProfileExperienceCreateManyProfileInput = {
-  experienceId: string
+  experienceId: number
 }
 
 export type ProfileExperienceUpdateWithoutProfileInput = {
@@ -429,15 +479,15 @@ export type ProfileExperienceUpdateWithoutProfileInput = {
 }
 
 export type ProfileExperienceUncheckedUpdateWithoutProfileInput = {
-  experienceId?: Prisma.StringFieldUpdateOperationsInput | string
+  experienceId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileExperienceUncheckedUpdateManyWithoutProfileInput = {
-  experienceId?: Prisma.StringFieldUpdateOperationsInput | string
+  experienceId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileExperienceCreateManyExperienceInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileExperienceUpdateWithoutExperienceInput = {
@@ -445,11 +495,11 @@ export type ProfileExperienceUpdateWithoutExperienceInput = {
 }
 
 export type ProfileExperienceUncheckedUpdateWithoutExperienceInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileExperienceUncheckedUpdateManyWithoutExperienceInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -501,8 +551,8 @@ export type $ProfileExperiencePayload<ExtArgs extends runtime.Types.Extensions.I
     experience: Prisma.$ExperiencePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    profileId: string
-    experienceId: string
+    profileId: number
+    experienceId: number
   }, ExtArgs["result"]["profileExperience"]>
   composites: {}
 }
@@ -928,8 +978,8 @@ export interface Prisma__ProfileExperienceClient<T, Null = never, ExtArgs extend
  * Fields of the ProfileExperience model
  */
 export interface ProfileExperienceFieldRefs {
-  readonly profileId: Prisma.FieldRef<"ProfileExperience", 'String'>
-  readonly experienceId: Prisma.FieldRef<"ProfileExperience", 'String'>
+  readonly profileId: Prisma.FieldRef<"ProfileExperience", 'Int'>
+  readonly experienceId: Prisma.FieldRef<"ProfileExperience", 'Int'>
 }
     
 

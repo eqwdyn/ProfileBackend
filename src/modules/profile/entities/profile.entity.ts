@@ -6,7 +6,7 @@ import { Project } from '../../projects/entities/project.entity.js';
 @ObjectType()
 export class Profile {
   @Field(() => ID)
-  id: string;
+  id: number;
 
   @Field()
   name: string;

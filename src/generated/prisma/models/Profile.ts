@@ -20,12 +20,22 @@ export type ProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$Profile
 
 export type AggregateProfile = {
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
 }
 
+export type ProfileAvgAggregateOutputType = {
+  id: number | null
+}
+
+export type ProfileSumAggregateOutputType = {
+  id: number | null
+}
+
 export type ProfileMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   description: string | null
   createdAt: Date | null
@@ -33,7 +43,7 @@ export type ProfileMinAggregateOutputType = {
 }
 
 export type ProfileMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   description: string | null
   createdAt: Date | null
@@ -49,6 +59,14 @@ export type ProfileCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ProfileAvgAggregateInputType = {
+  id?: true
+}
+
+export type ProfileSumAggregateInputType = {
+  id?: true
+}
 
 export type ProfileMinAggregateInputType = {
   id?: true
@@ -113,6 +131,18 @@ export type ProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileMinAggregateInputType
@@ -143,17 +173,21 @@ export type ProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProfileCountAggregateInputType | true
+  _avg?: ProfileAvgAggregateInputType
+  _sum?: ProfileSumAggregateInputType
   _min?: ProfileMinAggregateInputType
   _max?: ProfileMaxAggregateInputType
 }
 
 export type ProfileGroupByOutputType = {
-  id: string
+  id: number
   name: string
   description: string
   createdAt: Date
   updatedAt: Date
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
 }
@@ -177,7 +211,7 @@ export type ProfileWhereInput = {
   AND?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
-  id?: Prisma.StringFilter<"Profile"> | string
+  id?: Prisma.IntFilter<"Profile"> | number
   name?: Prisma.StringFilter<"Profile"> | string
   description?: Prisma.StringFilter<"Profile"> | string
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
@@ -199,7 +233,7 @@ export type ProfileOrderByWithRelationInput = {
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
@@ -219,15 +253,17 @@ export type ProfileOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfileCountOrderByAggregateInput
+  _avg?: Prisma.ProfileAvgOrderByAggregateInput
   _max?: Prisma.ProfileMaxOrderByAggregateInput
   _min?: Prisma.ProfileMinOrderByAggregateInput
+  _sum?: Prisma.ProfileSumOrderByAggregateInput
 }
 
 export type ProfileScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProfileScalarWhereWithAggregatesInput | Prisma.ProfileScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProfileScalarWhereWithAggregatesInput | Prisma.ProfileScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Profile"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Profile"> | number
   name?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   description?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
@@ -235,7 +271,6 @@ export type ProfileScalarWhereWithAggregatesInput = {
 }
 
 export type ProfileCreateInput = {
-  id?: string
   name: string
   description: string
   createdAt?: Date | string
@@ -246,7 +281,7 @@ export type ProfileCreateInput = {
 }
 
 export type ProfileUncheckedCreateInput = {
-  id?: string
+  id?: number
   name: string
   description: string
   createdAt?: Date | string
@@ -257,7 +292,6 @@ export type ProfileUncheckedCreateInput = {
 }
 
 export type ProfileUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -268,7 +302,7 @@ export type ProfileUpdateInput = {
 }
 
 export type ProfileUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -279,7 +313,7 @@ export type ProfileUncheckedUpdateInput = {
 }
 
 export type ProfileCreateManyInput = {
-  id?: string
+  id?: number
   name: string
   description: string
   createdAt?: Date | string
@@ -287,7 +321,6 @@ export type ProfileCreateManyInput = {
 }
 
 export type ProfileUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -295,7 +328,7 @@ export type ProfileUpdateManyMutationInput = {
 }
 
 export type ProfileUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -308,6 +341,10 @@ export type ProfileCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProfileAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type ProfileMaxOrderByAggregateInput = {
@@ -326,6 +363,10 @@ export type ProfileMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ProfileSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+}
+
 export type ProfileScalarRelationFilter = {
   is?: Prisma.ProfileWhereInput
   isNot?: Prisma.ProfileWhereInput
@@ -337,6 +378,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type ProfileCreateNestedOneWithoutSkillsInput = {
@@ -382,7 +431,6 @@ export type ProfileUpdateOneRequiredWithoutProjectsNestedInput = {
 }
 
 export type ProfileCreateWithoutSkillsInput = {
-  id?: string
   name: string
   description: string
   createdAt?: Date | string
@@ -392,7 +440,7 @@ export type ProfileCreateWithoutSkillsInput = {
 }
 
 export type ProfileUncheckedCreateWithoutSkillsInput = {
-  id?: string
+  id?: number
   name: string
   description: string
   createdAt?: Date | string
@@ -418,7 +466,6 @@ export type ProfileUpdateToOneWithWhereWithoutSkillsInput = {
 }
 
 export type ProfileUpdateWithoutSkillsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,7 +475,7 @@ export type ProfileUpdateWithoutSkillsInput = {
 }
 
 export type ProfileUncheckedUpdateWithoutSkillsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,7 +485,6 @@ export type ProfileUncheckedUpdateWithoutSkillsInput = {
 }
 
 export type ProfileCreateWithoutExperiencesInput = {
-  id?: string
   name: string
   description: string
   createdAt?: Date | string
@@ -448,7 +494,7 @@ export type ProfileCreateWithoutExperiencesInput = {
 }
 
 export type ProfileUncheckedCreateWithoutExperiencesInput = {
-  id?: string
+  id?: number
   name: string
   description: string
   createdAt?: Date | string
@@ -474,7 +520,6 @@ export type ProfileUpdateToOneWithWhereWithoutExperiencesInput = {
 }
 
 export type ProfileUpdateWithoutExperiencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -484,7 +529,7 @@ export type ProfileUpdateWithoutExperiencesInput = {
 }
 
 export type ProfileUncheckedUpdateWithoutExperiencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,7 +539,6 @@ export type ProfileUncheckedUpdateWithoutExperiencesInput = {
 }
 
 export type ProfileCreateWithoutProjectsInput = {
-  id?: string
   name: string
   description: string
   createdAt?: Date | string
@@ -504,7 +548,7 @@ export type ProfileCreateWithoutProjectsInput = {
 }
 
 export type ProfileUncheckedCreateWithoutProjectsInput = {
-  id?: string
+  id?: number
   name: string
   description: string
   createdAt?: Date | string
@@ -530,7 +574,6 @@ export type ProfileUpdateToOneWithWhereWithoutProjectsInput = {
 }
 
 export type ProfileUpdateWithoutProjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -540,7 +583,7 @@ export type ProfileUpdateWithoutProjectsInput = {
 }
 
 export type ProfileUncheckedUpdateWithoutProjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -652,7 +695,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     projects: Prisma.$ProfileProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     name: string
     description: string
     createdAt: Date
@@ -1083,7 +1126,7 @@ export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Profile model
  */
 export interface ProfileFieldRefs {
-  readonly id: Prisma.FieldRef<"Profile", 'String'>
+  readonly id: Prisma.FieldRef<"Profile", 'Int'>
   readonly name: Prisma.FieldRef<"Profile", 'String'>
   readonly description: Prisma.FieldRef<"Profile", 'String'>
   readonly createdAt: Prisma.FieldRef<"Profile", 'DateTime'>

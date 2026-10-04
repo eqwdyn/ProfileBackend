@@ -107,6 +107,7 @@ export const ExperienceScalarFieldEnum = {
   id: 'id',
   company: 'company',
   position: 'position',
+  achievements: 'achievements',
   startDate: 'startDate',
   endDate: 'endDate'
 } as const
@@ -124,7 +125,8 @@ export type ProfileExperienceScalarFieldEnum = (typeof ProfileExperienceScalarFi
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  description: 'description'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]

@@ -20,18 +20,30 @@ export type ProfileProjectModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateProfileProject = {
   _count: ProfileProjectCountAggregateOutputType | null
+  _avg: ProfileProjectAvgAggregateOutputType | null
+  _sum: ProfileProjectSumAggregateOutputType | null
   _min: ProfileProjectMinAggregateOutputType | null
   _max: ProfileProjectMaxAggregateOutputType | null
 }
 
+export type ProfileProjectAvgAggregateOutputType = {
+  profileId: number | null
+  projectId: number | null
+}
+
+export type ProfileProjectSumAggregateOutputType = {
+  profileId: number | null
+  projectId: number | null
+}
+
 export type ProfileProjectMinAggregateOutputType = {
-  profileId: string | null
-  projectId: string | null
+  profileId: number | null
+  projectId: number | null
 }
 
 export type ProfileProjectMaxAggregateOutputType = {
-  profileId: string | null
-  projectId: string | null
+  profileId: number | null
+  projectId: number | null
 }
 
 export type ProfileProjectCountAggregateOutputType = {
@@ -40,6 +52,16 @@ export type ProfileProjectCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ProfileProjectAvgAggregateInputType = {
+  profileId?: true
+  projectId?: true
+}
+
+export type ProfileProjectSumAggregateInputType = {
+  profileId?: true
+  projectId?: true
+}
 
 export type ProfileProjectMinAggregateInputType = {
   profileId?: true
@@ -95,6 +117,18 @@ export type ProfileProjectAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileProjectAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileProjectSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileProjectMinAggregateInputType
@@ -125,14 +159,18 @@ export type ProfileProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: ProfileProjectCountAggregateInputType | true
+  _avg?: ProfileProjectAvgAggregateInputType
+  _sum?: ProfileProjectSumAggregateInputType
   _min?: ProfileProjectMinAggregateInputType
   _max?: ProfileProjectMaxAggregateInputType
 }
 
 export type ProfileProjectGroupByOutputType = {
-  profileId: string
-  projectId: string
+  profileId: number
+  projectId: number
   _count: ProfileProjectCountAggregateOutputType | null
+  _avg: ProfileProjectAvgAggregateOutputType | null
+  _sum: ProfileProjectSumAggregateOutputType | null
   _min: ProfileProjectMinAggregateOutputType | null
   _max: ProfileProjectMaxAggregateOutputType | null
 }
@@ -156,8 +194,8 @@ export type ProfileProjectWhereInput = {
   AND?: Prisma.ProfileProjectWhereInput | Prisma.ProfileProjectWhereInput[]
   OR?: Prisma.ProfileProjectWhereInput[]
   NOT?: Prisma.ProfileProjectWhereInput | Prisma.ProfileProjectWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileProject"> | string
-  projectId?: Prisma.StringFilter<"ProfileProject"> | string
+  profileId?: Prisma.IntFilter<"ProfileProject"> | number
+  projectId?: Prisma.IntFilter<"ProfileProject"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }
@@ -174,8 +212,8 @@ export type ProfileProjectWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProfileProjectWhereInput | Prisma.ProfileProjectWhereInput[]
   OR?: Prisma.ProfileProjectWhereInput[]
   NOT?: Prisma.ProfileProjectWhereInput | Prisma.ProfileProjectWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileProject"> | string
-  projectId?: Prisma.StringFilter<"ProfileProject"> | string
+  profileId?: Prisma.IntFilter<"ProfileProject"> | number
+  projectId?: Prisma.IntFilter<"ProfileProject"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }, "profileId_projectId">
@@ -184,16 +222,18 @@ export type ProfileProjectOrderByWithAggregationInput = {
   profileId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   _count?: Prisma.ProfileProjectCountOrderByAggregateInput
+  _avg?: Prisma.ProfileProjectAvgOrderByAggregateInput
   _max?: Prisma.ProfileProjectMaxOrderByAggregateInput
   _min?: Prisma.ProfileProjectMinOrderByAggregateInput
+  _sum?: Prisma.ProfileProjectSumOrderByAggregateInput
 }
 
 export type ProfileProjectScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProfileProjectScalarWhereWithAggregatesInput | Prisma.ProfileProjectScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProfileProjectScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProfileProjectScalarWhereWithAggregatesInput | Prisma.ProfileProjectScalarWhereWithAggregatesInput[]
-  profileId?: Prisma.StringWithAggregatesFilter<"ProfileProject"> | string
-  projectId?: Prisma.StringWithAggregatesFilter<"ProfileProject"> | string
+  profileId?: Prisma.IntWithAggregatesFilter<"ProfileProject"> | number
+  projectId?: Prisma.IntWithAggregatesFilter<"ProfileProject"> | number
 }
 
 export type ProfileProjectCreateInput = {
@@ -202,8 +242,8 @@ export type ProfileProjectCreateInput = {
 }
 
 export type ProfileProjectUncheckedCreateInput = {
-  profileId: string
-  projectId: string
+  profileId: number
+  projectId: number
 }
 
 export type ProfileProjectUpdateInput = {
@@ -212,13 +252,13 @@ export type ProfileProjectUpdateInput = {
 }
 
 export type ProfileProjectUncheckedUpdateInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  projectId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileProjectCreateManyInput = {
-  profileId: string
-  projectId: string
+  profileId: number
+  projectId: number
 }
 
 export type ProfileProjectUpdateManyMutationInput = {
@@ -226,8 +266,8 @@ export type ProfileProjectUpdateManyMutationInput = {
 }
 
 export type ProfileProjectUncheckedUpdateManyInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  projectId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileProjectListRelationFilter = {
@@ -241,11 +281,16 @@ export type ProfileProjectOrderByRelationAggregateInput = {
 }
 
 export type ProfileProjectProfileIdProjectIdCompoundUniqueInput = {
-  profileId: string
-  projectId: string
+  profileId: number
+  projectId: number
 }
 
 export type ProfileProjectCountOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+}
+
+export type ProfileProjectAvgOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
 }
@@ -256,6 +301,11 @@ export type ProfileProjectMaxOrderByAggregateInput = {
 }
 
 export type ProfileProjectMinOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+}
+
+export type ProfileProjectSumOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
 }
@@ -349,7 +399,7 @@ export type ProfileProjectCreateWithoutProfileInput = {
 }
 
 export type ProfileProjectUncheckedCreateWithoutProfileInput = {
-  projectId: string
+  projectId: number
 }
 
 export type ProfileProjectCreateOrConnectWithoutProfileInput = {
@@ -382,8 +432,8 @@ export type ProfileProjectScalarWhereInput = {
   AND?: Prisma.ProfileProjectScalarWhereInput | Prisma.ProfileProjectScalarWhereInput[]
   OR?: Prisma.ProfileProjectScalarWhereInput[]
   NOT?: Prisma.ProfileProjectScalarWhereInput | Prisma.ProfileProjectScalarWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileProject"> | string
-  projectId?: Prisma.StringFilter<"ProfileProject"> | string
+  profileId?: Prisma.IntFilter<"ProfileProject"> | number
+  projectId?: Prisma.IntFilter<"ProfileProject"> | number
 }
 
 export type ProfileProjectCreateWithoutProjectInput = {
@@ -391,7 +441,7 @@ export type ProfileProjectCreateWithoutProjectInput = {
 }
 
 export type ProfileProjectUncheckedCreateWithoutProjectInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileProjectCreateOrConnectWithoutProjectInput = {
@@ -421,7 +471,7 @@ export type ProfileProjectUpdateManyWithWhereWithoutProjectInput = {
 }
 
 export type ProfileProjectCreateManyProfileInput = {
-  projectId: string
+  projectId: number
 }
 
 export type ProfileProjectUpdateWithoutProfileInput = {
@@ -429,15 +479,15 @@ export type ProfileProjectUpdateWithoutProfileInput = {
 }
 
 export type ProfileProjectUncheckedUpdateWithoutProfileInput = {
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileProjectUncheckedUpdateManyWithoutProfileInput = {
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileProjectCreateManyProjectInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileProjectUpdateWithoutProjectInput = {
@@ -445,11 +495,11 @@ export type ProfileProjectUpdateWithoutProjectInput = {
 }
 
 export type ProfileProjectUncheckedUpdateWithoutProjectInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileProjectUncheckedUpdateManyWithoutProjectInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -501,8 +551,8 @@ export type $ProfileProjectPayload<ExtArgs extends runtime.Types.Extensions.Inte
     project: Prisma.$ProjectPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    profileId: string
-    projectId: string
+    profileId: number
+    projectId: number
   }, ExtArgs["result"]["profileProject"]>
   composites: {}
 }
@@ -928,8 +978,8 @@ export interface Prisma__ProfileProjectClient<T, Null = never, ExtArgs extends r
  * Fields of the ProfileProject model
  */
 export interface ProfileProjectFieldRefs {
-  readonly profileId: Prisma.FieldRef<"ProfileProject", 'String'>
-  readonly projectId: Prisma.FieldRef<"ProfileProject", 'String'>
+  readonly profileId: Prisma.FieldRef<"ProfileProject", 'Int'>
+  readonly projectId: Prisma.FieldRef<"ProfileProject", 'Int'>
 }
     
 

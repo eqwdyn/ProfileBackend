@@ -20,18 +20,30 @@ export type ProfileSkillModel = runtime.Types.Result.DefaultSelection<Prisma.$Pr
 
 export type AggregateProfileSkill = {
   _count: ProfileSkillCountAggregateOutputType | null
+  _avg: ProfileSkillAvgAggregateOutputType | null
+  _sum: ProfileSkillSumAggregateOutputType | null
   _min: ProfileSkillMinAggregateOutputType | null
   _max: ProfileSkillMaxAggregateOutputType | null
 }
 
+export type ProfileSkillAvgAggregateOutputType = {
+  profileId: number | null
+  skillId: number | null
+}
+
+export type ProfileSkillSumAggregateOutputType = {
+  profileId: number | null
+  skillId: number | null
+}
+
 export type ProfileSkillMinAggregateOutputType = {
-  profileId: string | null
-  skillId: string | null
+  profileId: number | null
+  skillId: number | null
 }
 
 export type ProfileSkillMaxAggregateOutputType = {
-  profileId: string | null
-  skillId: string | null
+  profileId: number | null
+  skillId: number | null
 }
 
 export type ProfileSkillCountAggregateOutputType = {
@@ -40,6 +52,16 @@ export type ProfileSkillCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ProfileSkillAvgAggregateInputType = {
+  profileId?: true
+  skillId?: true
+}
+
+export type ProfileSkillSumAggregateInputType = {
+  profileId?: true
+  skillId?: true
+}
 
 export type ProfileSkillMinAggregateInputType = {
   profileId?: true
@@ -95,6 +117,18 @@ export type ProfileSkillAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileSkillAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileSkillSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileSkillMinAggregateInputType
@@ -125,14 +159,18 @@ export type ProfileSkillGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: ProfileSkillCountAggregateInputType | true
+  _avg?: ProfileSkillAvgAggregateInputType
+  _sum?: ProfileSkillSumAggregateInputType
   _min?: ProfileSkillMinAggregateInputType
   _max?: ProfileSkillMaxAggregateInputType
 }
 
 export type ProfileSkillGroupByOutputType = {
-  profileId: string
-  skillId: string
+  profileId: number
+  skillId: number
   _count: ProfileSkillCountAggregateOutputType | null
+  _avg: ProfileSkillAvgAggregateOutputType | null
+  _sum: ProfileSkillSumAggregateOutputType | null
   _min: ProfileSkillMinAggregateOutputType | null
   _max: ProfileSkillMaxAggregateOutputType | null
 }
@@ -156,8 +194,8 @@ export type ProfileSkillWhereInput = {
   AND?: Prisma.ProfileSkillWhereInput | Prisma.ProfileSkillWhereInput[]
   OR?: Prisma.ProfileSkillWhereInput[]
   NOT?: Prisma.ProfileSkillWhereInput | Prisma.ProfileSkillWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileSkill"> | string
-  skillId?: Prisma.StringFilter<"ProfileSkill"> | string
+  profileId?: Prisma.IntFilter<"ProfileSkill"> | number
+  skillId?: Prisma.IntFilter<"ProfileSkill"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   skill?: Prisma.XOR<Prisma.SkillScalarRelationFilter, Prisma.SkillWhereInput>
 }
@@ -174,8 +212,8 @@ export type ProfileSkillWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProfileSkillWhereInput | Prisma.ProfileSkillWhereInput[]
   OR?: Prisma.ProfileSkillWhereInput[]
   NOT?: Prisma.ProfileSkillWhereInput | Prisma.ProfileSkillWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileSkill"> | string
-  skillId?: Prisma.StringFilter<"ProfileSkill"> | string
+  profileId?: Prisma.IntFilter<"ProfileSkill"> | number
+  skillId?: Prisma.IntFilter<"ProfileSkill"> | number
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   skill?: Prisma.XOR<Prisma.SkillScalarRelationFilter, Prisma.SkillWhereInput>
 }, "profileId_skillId">
@@ -184,16 +222,18 @@ export type ProfileSkillOrderByWithAggregationInput = {
   profileId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
   _count?: Prisma.ProfileSkillCountOrderByAggregateInput
+  _avg?: Prisma.ProfileSkillAvgOrderByAggregateInput
   _max?: Prisma.ProfileSkillMaxOrderByAggregateInput
   _min?: Prisma.ProfileSkillMinOrderByAggregateInput
+  _sum?: Prisma.ProfileSkillSumOrderByAggregateInput
 }
 
 export type ProfileSkillScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProfileSkillScalarWhereWithAggregatesInput | Prisma.ProfileSkillScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProfileSkillScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProfileSkillScalarWhereWithAggregatesInput | Prisma.ProfileSkillScalarWhereWithAggregatesInput[]
-  profileId?: Prisma.StringWithAggregatesFilter<"ProfileSkill"> | string
-  skillId?: Prisma.StringWithAggregatesFilter<"ProfileSkill"> | string
+  profileId?: Prisma.IntWithAggregatesFilter<"ProfileSkill"> | number
+  skillId?: Prisma.IntWithAggregatesFilter<"ProfileSkill"> | number
 }
 
 export type ProfileSkillCreateInput = {
@@ -202,8 +242,8 @@ export type ProfileSkillCreateInput = {
 }
 
 export type ProfileSkillUncheckedCreateInput = {
-  profileId: string
-  skillId: string
+  profileId: number
+  skillId: number
 }
 
 export type ProfileSkillUpdateInput = {
@@ -212,13 +252,13 @@ export type ProfileSkillUpdateInput = {
 }
 
 export type ProfileSkillUncheckedUpdateInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  skillId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileSkillCreateManyInput = {
-  profileId: string
-  skillId: string
+  profileId: number
+  skillId: number
 }
 
 export type ProfileSkillUpdateManyMutationInput = {
@@ -226,8 +266,8 @@ export type ProfileSkillUpdateManyMutationInput = {
 }
 
 export type ProfileSkillUncheckedUpdateManyInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
+  skillId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileSkillListRelationFilter = {
@@ -241,11 +281,16 @@ export type ProfileSkillOrderByRelationAggregateInput = {
 }
 
 export type ProfileSkillProfileIdSkillIdCompoundUniqueInput = {
-  profileId: string
-  skillId: string
+  profileId: number
+  skillId: number
 }
 
 export type ProfileSkillCountOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  skillId?: Prisma.SortOrder
+}
+
+export type ProfileSkillAvgOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
 }
@@ -256,6 +301,11 @@ export type ProfileSkillMaxOrderByAggregateInput = {
 }
 
 export type ProfileSkillMinOrderByAggregateInput = {
+  profileId?: Prisma.SortOrder
+  skillId?: Prisma.SortOrder
+}
+
+export type ProfileSkillSumOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
 }
@@ -349,7 +399,7 @@ export type ProfileSkillCreateWithoutProfileInput = {
 }
 
 export type ProfileSkillUncheckedCreateWithoutProfileInput = {
-  skillId: string
+  skillId: number
 }
 
 export type ProfileSkillCreateOrConnectWithoutProfileInput = {
@@ -382,8 +432,8 @@ export type ProfileSkillScalarWhereInput = {
   AND?: Prisma.ProfileSkillScalarWhereInput | Prisma.ProfileSkillScalarWhereInput[]
   OR?: Prisma.ProfileSkillScalarWhereInput[]
   NOT?: Prisma.ProfileSkillScalarWhereInput | Prisma.ProfileSkillScalarWhereInput[]
-  profileId?: Prisma.StringFilter<"ProfileSkill"> | string
-  skillId?: Prisma.StringFilter<"ProfileSkill"> | string
+  profileId?: Prisma.IntFilter<"ProfileSkill"> | number
+  skillId?: Prisma.IntFilter<"ProfileSkill"> | number
 }
 
 export type ProfileSkillCreateWithoutSkillInput = {
@@ -391,7 +441,7 @@ export type ProfileSkillCreateWithoutSkillInput = {
 }
 
 export type ProfileSkillUncheckedCreateWithoutSkillInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileSkillCreateOrConnectWithoutSkillInput = {
@@ -421,7 +471,7 @@ export type ProfileSkillUpdateManyWithWhereWithoutSkillInput = {
 }
 
 export type ProfileSkillCreateManyProfileInput = {
-  skillId: string
+  skillId: number
 }
 
 export type ProfileSkillUpdateWithoutProfileInput = {
@@ -429,15 +479,15 @@ export type ProfileSkillUpdateWithoutProfileInput = {
 }
 
 export type ProfileSkillUncheckedUpdateWithoutProfileInput = {
-  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  skillId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileSkillUncheckedUpdateManyWithoutProfileInput = {
-  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  skillId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileSkillCreateManySkillInput = {
-  profileId: string
+  profileId: number
 }
 
 export type ProfileSkillUpdateWithoutSkillInput = {
@@ -445,11 +495,11 @@ export type ProfileSkillUpdateWithoutSkillInput = {
 }
 
 export type ProfileSkillUncheckedUpdateWithoutSkillInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileSkillUncheckedUpdateManyWithoutSkillInput = {
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -501,8 +551,8 @@ export type $ProfileSkillPayload<ExtArgs extends runtime.Types.Extensions.Intern
     skill: Prisma.$SkillPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    profileId: string
-    skillId: string
+    profileId: number
+    skillId: number
   }, ExtArgs["result"]["profileSkill"]>
   composites: {}
 }
@@ -928,8 +978,8 @@ export interface Prisma__ProfileSkillClient<T, Null = never, ExtArgs extends run
  * Fields of the ProfileSkill model
  */
 export interface ProfileSkillFieldRefs {
-  readonly profileId: Prisma.FieldRef<"ProfileSkill", 'String'>
-  readonly skillId: Prisma.FieldRef<"ProfileSkill", 'String'>
+  readonly profileId: Prisma.FieldRef<"ProfileSkill", 'Int'>
+  readonly skillId: Prisma.FieldRef<"ProfileSkill", 'Int'>
 }
     
 

@@ -1,7 +1,19 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateExperienceInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  company: string;
+
+  @Field()
+  position: string;
+
+  @Field()
+  startDate: string;
+
+  @Field()
+  endDate: string;
+
+  @Field(() => [String])
+  achievements: string[];
 }
