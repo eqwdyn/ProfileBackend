@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateExperienceInput {
+  achievements: [String!]!
+  company: String!
+  endDate: String!
+  position: String!
+  startDate: String!
+}
+
 input CreateProfileInput {
   description: String!
   name: String!
@@ -22,8 +30,11 @@ type Experience {
 }
 
 type Mutation {
+  createExperience(createExperienceInput: CreateExperienceInput!): Experience!
   createProfile(createProfileInput: CreateProfileInput!): Profile!
+  removeExperience(id: Int!): Experience!
   removeProfile(id: Int!): Profile!
+  updateExperience(updateExperienceInput: UpdateExperienceInput!): Experience!
 }
 
 type Profile {
@@ -44,13 +55,22 @@ type Project {
 }
 
 type Query {
+  experience(id: Int!): Experience!
+  experiences: [Experience!]!
   profile(id: Int!): Profile!
   profiles: [Profile!]!
 }
 
 type Skill {
   id: ID!
-
-  """Developer skill"""
   name: String!
+}
+
+input UpdateExperienceInput {
+  achievements: [String!]
+  company: String
+  endDate: String
+  id: Int!
+  position: String
+  startDate: String
 }

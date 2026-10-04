@@ -4,5 +4,6 @@ import { ExperiencesResolver } from './experiences.resolver.js';
 
 @Module({
   providers: [ExperiencesResolver, ExperiencesService],
+  exports: [ExperiencesService],
 })
 export class ExperiencesModule {}

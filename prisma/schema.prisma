@@ -12,7 +12,7 @@ model Profile {
 
   name String
   description String
-  skills ProfileSkill[]
+  skills ProfileSkill[] 
   experiences ProfileExperience[]
   projects ProfileProject[]
 

@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../../core/prisma/prisma.service.js';
 import { CreateProjectInput } from './dto/create-project.input.js';
 import { UpdateProjectInput } from './dto/update-project.input.js';
 
 @Injectable()
 export class ProjectsService {
-  create(createProjectInput: CreateProjectInput) {
-    return 'This action adds a new project';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: CreateProjectInput) {
+    const newProject = await this.prisma.project.create({ data });
+    return newProject;
   }
 
-  findAll() {
-    return `This action returns all projects`;
+  async findAll() {
+    const projects = await this.prisma.project.findMany();
+    return projects;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
+  async findOne(id: number) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with id ${id} not found`);
+    }
+
+    return project;
   }
 
-  update(id: number, updateProjectInput: UpdateProjectInput) {
-    return `This action updates a #${id} project`;
+  async update(id: number, data: UpdateProjectInput) {
+    const existing = await this.findOne(id);
+
+    return this.prisma.project.update({
+      where: { id },
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(id: number) {
+    const existing = await this.findOne(id);
+
+    await this.prisma.project.delete({ where: { id } });
   }
 }

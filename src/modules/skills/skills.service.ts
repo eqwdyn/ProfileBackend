@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSkillInput } from './dto/create-skill.input.js';
 import { UpdateSkillInput } from './dto/update-skill.input.js';
+import { PrismaService } from '../../core/prisma/prisma.service.js';
 
 @Injectable()
 export class SkillsService {
-  create(createSkillInput: CreateSkillInput) {
-    return 'This action adds a new skill';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: CreateSkillInput) {
+    const newProject = await this.prisma.skill.create({ data });
+    return newProject;
   }
 
-  findAll() {
-    return `This action returns all skills`;
+  async findAll() {
+    const profiles = await this.prisma.skill.findMany();
+    return profiles;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} skill`;
+  async findOne(id: number) {
+    const project = await this.prisma.skill.findUnique({
+      where: { id },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with id ${id} not found`);
+    }
+
+    return project;
   }
 
-  update(id: number, updateSkillInput: UpdateSkillInput) {
-    return `This action updates a #${id} skill`;
+  async update(id: number, data: UpdateSkillInput) {
+    const existing = await this.findOne(id);
+
+    return this.prisma.skill.update({
+      where: { id },
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} skill`;
+  async remove(id: number) {
+    const existing = await this.findOne(id);
+
+    await this.prisma.skill.delete({ where: { id } });
   }
 }
