@@ -32,9 +32,13 @@ type Experience {
 type Mutation {
   createExperience(createExperienceInput: CreateExperienceInput!): Experience!
   createProfile(createProfileInput: CreateProfileInput!): Profile!
+  relateExperience(relateExperienceInput: RelateExperienceInput!): Profile!
+  relateProject(relateExperienceInput: RelateProjectInput!): Profile!
+  relateSkill(relateSkillInput: RelateSkillInput!): Profile!
   removeExperience(id: Int!): Experience!
   removeProfile(id: Int!): Profile!
   updateExperience(updateExperienceInput: UpdateExperienceInput!): Experience!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
 }
 
 type Profile {
@@ -61,6 +65,21 @@ type Query {
   profiles: [Profile!]!
 }
 
+input RelateExperienceInput {
+  experienceId: ID!
+  profileId: ID!
+}
+
+input RelateProjectInput {
+  profileId: ID!
+  projectId: ID!
+}
+
+input RelateSkillInput {
+  profileId: ID!
+  skillId: ID!
+}
+
 type Skill {
   id: ID!
   name: String!
@@ -73,4 +92,10 @@ input UpdateExperienceInput {
   id: Int!
   position: String
   startDate: String
+}
+
+input UpdateProfileInput {
+  description: String
+  id: Int!
+  name: String
 }
