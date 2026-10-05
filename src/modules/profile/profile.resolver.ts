@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ProfileService } from './profile.service.js';
 import { Profile } from './entities/profile.entity.js';
 import { CreateProfileInput } from './dto/create-profile.input.js';
@@ -6,10 +14,21 @@ import { RelateExperienceInput } from './dto/relate-experience.input.js';
 import { RelateProjectInput } from './dto/relate-project.input.js';
 import { RelateSkillInput } from './dto/relate-skill.input.js';
 import { UpdateProfileInput } from './dto/update-profile.input.js';
+import { Project } from '../projects/entities/project.entity.js';
+import { Experience } from '../experiences/entities/experience.entity.js';
+import { Skill } from '../skills/entities/skill.entity.js';
+import { SkillsService } from '../skills/skills.service.js';
+import { ExperiencesService } from '../experiences/experiences.service.js';
+import { ProjectsService } from '../projects/projects.service.js';
 
 @Resolver(() => Profile)
 export class ProfileResolver {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly skillService: SkillsService,
+    private readonly experienceService: ExperiencesService,
+    private readonly projectService: ProjectsService,
+  ) {}
 
   @Mutation(() => Profile)
   createProfile(
@@ -39,6 +58,31 @@ export class ProfileResolver {
   findAll() {
     return this.profileService.findAll();
   }
+  @ResolveField(() => [Skill], { nullable: true })
+  async skills(@Parent() profile: Profile) {
+    if (!profile.skills) {
+      profile.skills = await this.skillService.findByProfileId(profile.id);
+    }
+    return profile.skills;
+  }
+
+  @ResolveField(() => [Experience], { nullable: true })
+  async experiences(@Parent() profile: Profile) {
+    if (!profile.experiences) {
+      profile.experiences = await this.experienceService.findByProfileId(
+        profile.id,
+      );
+    }
+    return profile.experiences;
+  }
+
+  @ResolveField(() => [Project], { nullable: true })
+  async projects(@Parent() profile: Profile) {
+    if (!profile.projects) {
+      profile.projects = await this.projectService.findByProfileId(profile.id);
+    }
+    return profile.projects;
+  }
 
   @Query(() => Profile, { name: 'profile' })
   findOne(@Args('id', { type: () => Int }) id: number) {
@@ -49,9 +93,6 @@ export class ProfileResolver {
   updateProfile(
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
   ) {
-    if (!updateProfileInput.id) {
-      throw new Error('id is required to update a profile');
-    }
     return this.profileService.update(
       updateProfileInput.id,
       updateProfileInput,

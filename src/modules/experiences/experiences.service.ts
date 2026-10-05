@@ -28,6 +28,14 @@ export class ExperiencesService {
     return experience;
   }
 
+  async findByProfileId(profileId: number) {
+    const records = await this.prisma.profileExperience.findMany({
+      where: { profileId },
+      include: { experience: true },
+    });
+    return records.map((r) => r.experience);
+  }
+
   async update(id: number, data: UpdateExperienceInput) {
     const existing = await this.prisma.experience.findUnique({ where: { id } });
     if (!existing) {

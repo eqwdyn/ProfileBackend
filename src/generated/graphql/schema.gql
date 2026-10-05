@@ -15,6 +15,16 @@ input CreateProfileInput {
   name: String!
 }
 
+input CreateProjectInput {
+  description: String!
+  name: String!
+}
+
+input CreateSkillInput {
+  name: String!
+  profileId: ID!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -23,22 +33,28 @@ scalar DateTime
 type Experience {
   achievements: [String!]!
   company: String!
-  endDate: String!
+  endDate: DateTime!
   id: ID!
   position: String!
-  startDate: String!
+  startDate: DateTime!
 }
 
 type Mutation {
   createExperience(createExperienceInput: CreateExperienceInput!): Experience!
   createProfile(createProfileInput: CreateProfileInput!): Profile!
+  createProject(createProjectInput: CreateProjectInput!): Project!
+  createSkill(createSkillInput: CreateSkillInput!): Skill!
   relateExperience(relateExperienceInput: RelateExperienceInput!): Profile!
   relateProject(relateExperienceInput: RelateProjectInput!): Profile!
   relateSkill(relateSkillInput: RelateSkillInput!): Profile!
   removeExperience(id: Int!): Experience!
   removeProfile(id: Int!): Profile!
+  removeProject(id: Int!): Project!
+  removeSkill(id: Int!): Skill!
   updateExperience(updateExperienceInput: UpdateExperienceInput!): Experience!
   updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
+  updateProject(updateProjectInput: UpdateProjectInput!): Project!
+  updateSkill(updateSkillInput: UpdateSkillInput!): Skill!
 }
 
 type Profile {
@@ -63,6 +79,10 @@ type Query {
   experiences: [Experience!]!
   profile(id: Int!): Profile!
   profiles: [Profile!]!
+  project(id: Int!): Project!
+  projects: [Project!]!
+  skill(id: Int!): Skill!
+  skills: [Skill!]!
 }
 
 input RelateExperienceInput {
@@ -98,4 +118,16 @@ input UpdateProfileInput {
   description: String
   id: Int!
   name: String
+}
+
+input UpdateProjectInput {
+  description: String
+  id: Int!
+  name: String
+}
+
+input UpdateSkillInput {
+  id: Int!
+  name: String
+  profileId: ID
 }

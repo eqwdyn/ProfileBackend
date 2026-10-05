@@ -29,6 +29,14 @@ export class ProjectsService {
     return project;
   }
 
+  async findByProfileId(profileId: number) {
+    const records = await this.prisma.profileProject.findMany({
+      where: { profileId },
+      include: { project: true },
+    });
+    return records.map((r) => r.project);
+  }
+
   async update(id: number, data: UpdateProjectInput) {
     const existing = await this.findOne(id);
 

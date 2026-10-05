@@ -29,6 +29,14 @@ export class SkillsService {
     return project;
   }
 
+  async findByProfileId(profileId: number) {
+    const records = await this.prisma.profileSkill.findMany({
+      where: { profileId },
+      include: { skill: true },
+    });
+    return records.map((r) => r.skill);
+  }
+
   async update(id: number, data: UpdateSkillInput) {
     const existing = await this.findOne(id);
 

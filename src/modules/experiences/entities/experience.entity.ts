@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, GraphQLISODateTime } from '@nestjs/graphql';
 
 @ObjectType()
 export class Experience {
@@ -11,11 +11,11 @@ export class Experience {
   @Field()
   position: string;
 
-  @Field()
-  startDate: string;
+  @Field(() => GraphQLISODateTime)
+  startDate: Date;
 
-  @Field()
-  endDate: string;
+  @Field(() => GraphQLISODateTime)
+  endDate: Date;
 
   @Field(() => [String])
   achievements: string[];
