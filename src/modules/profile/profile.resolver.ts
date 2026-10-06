@@ -65,7 +65,6 @@ export class ProfileResolver {
     }
     return profile.skills;
   }
-
   @ResolveField(() => [Experience], { nullable: true })
   async experiences(@Parent() profile: Profile) {
     if (!profile.experiences) {
@@ -75,7 +74,6 @@ export class ProfileResolver {
     }
     return profile.experiences;
   }
-
   @ResolveField(() => [Project], { nullable: true })
   async projects(@Parent() profile: Profile) {
     if (!profile.projects) {
