@@ -12,6 +12,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/generated/graphql/schema.gql'),
       sortSchema: true,
+      playground: true,
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     ProfileModule,
