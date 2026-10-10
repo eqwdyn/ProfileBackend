@@ -14,6 +14,7 @@ import { tmpdir } from 'os';
       autoSchemaFile: join(tmpdir(), 'schema.gql'),
       sortSchema: true,
       playground: true,
+      introspection: true,
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     ProfileModule,
