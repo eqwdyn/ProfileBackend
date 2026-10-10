@@ -13,6 +13,7 @@ import { tmpdir } from 'os';
       driver: ApolloDriver,
       autoSchemaFile: join(tmpdir(), 'schema.gql'),
       sortSchema: true,
+      playground: true,
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     ProfileModule,
