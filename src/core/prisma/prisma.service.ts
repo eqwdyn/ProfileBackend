@@ -9,9 +9,15 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(configService: ConfigService) {
-    const dbUrl = process.env.POSTGRES_PRISMA_URL;
+    const connectionString = process.env.POSTGRES_PRISMA_URL;
+    const caCert = process.env.SUPABASE_CERT;
+
     const adapter = new PrismaPg({
-      connectionString: dbUrl,
+      connectionString,
+      ssl: {
+        ca: caCert,
+        rejectUnauthorized: true,
+      },
     });
     super({ adapter });
   }
