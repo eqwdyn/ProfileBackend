@@ -4,8 +4,16 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client.js';
 import { exit } from 'process';
 
-const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DATABASE}`;
-const pool = new Pool({ connectionString });
+const connectionString = process.env.POSTGRES_PRISMA_URL;
+const caCert = process.env.SUPABASE_CERT?.trim();
+
+const pool = new Pool({
+  connectionString,
+  ssl: {
+    ca: caCert,
+    rejectUnauthorized: true,
+  },
+});
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
